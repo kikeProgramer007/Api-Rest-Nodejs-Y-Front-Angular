@@ -22,4 +22,16 @@ export class ProductService {
     /*     return this.http.get<Product[]>(`${this.myAppUrl}${this.myApiUrl}`, { headers: headers } ) */
     return this.http.get<Product[]>(`${this.myAppUrl}${this.myApiUrl}`)
   }
+
+  saveProduct(product: Product): Observable<string> {
+    return this.http.post<string>(`${this.myAppUrl}${this.myApiUrl}`, product)
+  }
+
+  updateProduct(id:number, product:any): Observable<any>{
+    return this.http.put(this.myAppUrl + this.myApiUrl +'/'+ id, product); 
+  }
+
+  deleteProduct(id: number): Observable<any>{
+    return this.http.delete(this.myAppUrl + this.myApiUrl +'/'+ id)
+  }
 }
