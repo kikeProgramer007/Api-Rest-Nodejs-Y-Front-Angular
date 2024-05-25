@@ -8,13 +8,16 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { ProductComponent } from './components/product/product.component';
 // Guards
 import { AuthGuard } from './utils/auth.guard';
-
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signIn', component: SignInComponent },
-  { path: 'product/create', component: ProductComponent },
+  { path: 'categoria', component: CategoriaComponent },
+  { path: 'product', component: ProductComponent },
+  { path: 'cliente', component: ClienteComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

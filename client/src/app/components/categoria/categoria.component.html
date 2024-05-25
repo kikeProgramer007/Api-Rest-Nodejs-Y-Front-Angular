@@ -4,7 +4,7 @@
   <div class="row">
       <div class="col-lg-8 offset-lg-2">
             <div class="text-center">
-                <h2>Productos</h2>
+                <h2>Categorias</h2>
             </div>
       </div>
   </div>
@@ -12,23 +12,17 @@
       <div class="col-lg-6">
           <div class="card">
               <div class="card-body">
-                  <h3 class="titulo text-center">{{ accion }} Producto</h3>
+                  <h3 class="titulo text-center">{{ accion }} Categoria</h3>
                     <div>
                       <div class="input-group input-group-lg mb-3">
                           <span class="input-group-text">
-                            <i class="fas fa-utensils"></i>
+                            <i class="fas fa-list"></i>
                           </span>
-                          <input  [(ngModel)]="name" type="text" class="form-control" placeholder="Nombre">
-                      </div>
-                      <div class="input-group input-group-lg mb-3">
-                          <span class="input-group-text">
-                            <i class="fas fa-utensils"></i>
-                          </span>
-                          <input  [(ngModel)]="description"  type="text" class="form-control" placeholder="Descripcion" >
+                          <input  [(ngModel)]="nombre" type="text" class="form-control" placeholder="Nombre">
                       </div>
 
                       <div class="d-grid gap-2">
-                          <button (click)="addProduct()" type="button"  class="btn btn-success btn-lg" >
+                          <button (click)="Add()" type="button"  class="btn btn-success btn-lg" >
                             <i class="fas fa-save"></i>&nbsp; Aceptar
                           </button>
                       </div>
@@ -40,22 +34,20 @@
       <div class="col-lg-6">
           <div class="card">
               <div class="card-body">
-                  <h3 class="titulo text-center">Listado de Producto</h3>
+                  <h3 class="titulo text-center">Listado de Categoria</h3>
                   <table class="table table-sm table-bordered  table-striped table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
                         <th width="1%"></th>
                         <th width="1%"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of listProduct">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.description }} </td>
-                        <td (click)="UpdateProduct(item)" ><i  class="fa-solid fa-pen-to-square text-info"></i></td>
-                        <td (click)="DeleteProduct(item.id)"><i  class="fa-solid fa-trash-can text-danger"></i></td>
+                      <tr *ngFor="let item of Lista">
+                        <td>{{ item.nombre }}</td>
+                        <td (click)="Update(item)" ><i  class="fa-solid fa-pen-to-square text-info"></i></td>
+                        <td (click)="Delete(item.id)"><i  class="fa-solid fa-trash-can text-danger"></i></td>
                       </tr>
                      
                     </tbody>

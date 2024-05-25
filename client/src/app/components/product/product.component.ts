@@ -75,7 +75,7 @@ export class ProductComponent implements OnInit {
         next: (v) => {
           this.loading = false;
           this.accion = 'Agregar';
-          this.toastr.success(`El Producto ${this.name} fue Actualizado con exito`, 'Producto Actualizado');
+          this.toastr.success(`El Producto ${this.name} fue Actualizado con exito`, 'Producto actualizado');
           this.resetForm();
           this.getProducts();
         },

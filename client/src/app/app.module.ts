@@ -18,6 +18,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ProductComponent } from './components/product/product.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ProductComponent } from './components/product/product.component';
     DashboardComponent,
     NavbarComponent,
     SpinnerComponent,
-    ProductComponent
+    ProductComponent,
+    CategoriaComponent,
+    ClienteComponent
   ],
   imports: [
     BrowserModule,

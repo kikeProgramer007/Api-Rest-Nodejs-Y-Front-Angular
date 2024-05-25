@@ -1,9 +1,13 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import routeCategoria from '../routes/categoria';
 import routesProduct from '../routes/product';
+import routesCliente from '../routes/cliente';
 import routesUser from '../routes/user';
 import { Product } from './product';
 import { User } from './user';
+import { Categoria } from './categoria';
+import { Cliente } from './cliente';
 
 class Server {
     private app: Application;
@@ -28,6 +32,8 @@ class Server {
     routes() {
         this.app.use('/api/products', routesProduct);
         this.app.use('/api/users', routesUser);
+        this.app.use('/api/categorias', routeCategoria);
+        this.app.use('/api/clientes', routesCliente);
     }
 
     midlewares() {
@@ -40,6 +46,8 @@ class Server {
 
     async dbConnect() {
         try {
+            await Cliente.sync();
+            await Categoria.sync()
             await Product.sync()
             await User.sync();
         } catch (error) {
