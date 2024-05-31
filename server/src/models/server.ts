@@ -3,11 +3,13 @@ import cors from 'cors';
 import routeCategoria from '../routes/categoria';
 import routesProduct from '../routes/product';
 import routesCliente from '../routes/cliente';
+import routesEmpleado from '../routes/empleado';
 import routesUser from '../routes/user';
 import { Product } from './product';
 import { User } from './user';
 import { Categoria } from './categoria';
 import { Cliente } from './cliente';
+import { Empleado } from './empleado';
 
 class Server {
     private app: Application;
@@ -34,6 +36,7 @@ class Server {
         this.app.use('/api/users', routesUser);
         this.app.use('/api/categorias', routeCategoria);
         this.app.use('/api/clientes', routesCliente);
+        this.app.use('/api/empleados', routesEmpleado);
     }
 
     midlewares() {
@@ -46,6 +49,7 @@ class Server {
 
     async dbConnect() {
         try {
+            await Empleado.sync();
             await Cliente.sync();
             await Categoria.sync()
             await Product.sync()
