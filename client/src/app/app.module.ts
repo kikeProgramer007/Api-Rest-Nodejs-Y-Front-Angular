@@ -22,6 +22,7 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { ListarComponent } from './components/empleado/listar/listar.component';
 import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
+import { NotaventaComponent } from './components/notaventa/notaventa.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CrearEditarComponent } from './components/empleado/crear-editar/crear-e
     CategoriaComponent,
     ClienteComponent,
     ListarComponent,
-    CrearEditarComponent
+    CrearEditarComponent,
+    NotaventaComponent
   ],
   imports: [
     BrowserModule,
