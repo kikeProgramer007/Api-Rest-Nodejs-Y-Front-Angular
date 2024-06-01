@@ -42,8 +42,14 @@ ng g c components/product	----> CREAR COMPONENTE
 
 
 
-otras herramientoas:
+----------------------otras herramientoas:
 jwt.io
 --toastr
 https://ngx-toastr.vercel.app/
 https://github.com/scttcper/ngx-toastr
+
+------------------------base de datos--------------------------------------
+Crear Models
+
+> npx sequelize-cli model:generate --name Categoria --attributes description:string
+> npx sequelize-cli model:generate --name Producto --attributes description:string,idCategoria:integer

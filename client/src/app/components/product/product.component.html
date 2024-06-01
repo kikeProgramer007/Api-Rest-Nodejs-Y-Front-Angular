@@ -26,6 +26,28 @@
                           </span>
                           <input  [(ngModel)]="description"  type="text" class="form-control" placeholder="Descripcion" >
                       </div>
+              
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text">
+                          <i class="fa-solid fa-layer-group"></i>
+                        </span>
+                        <select [(ngModel)]="id_categoria" class="form-select" name="categoria" id="categoria" aria-placeholder="Categoria">
+                          <option value="0" selected disabled>Seleccionar Categoria</option>
+                          <option *ngFor="let category of listCategoria" [value]="category.id" >{{ category.nombre }}</option>
+                        </select>
+                    </div>
+                    <div class="input-group input-group-lg mb-3">
+                      <span class="input-group-text">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                      </span>
+                      <input  [(ngModel)]="precio"  type="number"  step="0.01"class="form-control" placeholder="Precio" >
+                  </div>
+                     <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text">
+                          <i class="fa-solid fa-arrow-up-9-1"></i>
+                        </span>
+                        <input  [(ngModel)]="stock"  type="number" class="form-control" placeholder="Stock" >
+                    </div>
 
                       <div class="d-grid gap-2">
                           <button (click)="addProduct()" type="button"  class="btn btn-success btn-lg" >
@@ -46,6 +68,8 @@
                       <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Stock</th>
                         <th width="1%"></th>
                         <th width="1%"></th>
                       </tr>
@@ -54,6 +78,8 @@
                       <tr *ngFor="let item of listProduct">
                         <td>{{ item.name }}</td>
                         <td>{{ item.description }} </td>
+                        <td>{{ item.precio }} </td>
+                        <td>{{ item.stock }} </td>
                         <td (click)="UpdateProduct(item)" ><i  class="fa-solid fa-pen-to-square text-info"></i></td>
                         <td (click)="DeleteProduct(item.id)"><i  class="fa-solid fa-trash-can text-danger"></i></td>
                       </tr>

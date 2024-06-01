@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Product } from '../models/product';
 
 export const getProducts = async (req: Request, res: Response) => {
-    const listProducts = await Product.findAll();
+    const listProducts = await Product.findAll();//{ include: Categoria }
 
     res.json(listProducts)
 }
@@ -31,12 +31,15 @@ export const GetProduct = async (req: Request, res: Response) => {
 }
 
 export const NewProduct = async (req: Request, res: Response) => {
-    const{ name, description }= req.body;
+    const{ name, description, precio,stock,id_categoria}= req.body;
     try {
         // Guardarmos producto en la base de datos
         await Product.create({
             name: name,
-            description: description
+            description: description,
+            precio:precio,
+            stock:stock,
+            id_categoria:id_categoria
         })
     
         res.json({
@@ -52,8 +55,7 @@ export const NewProduct = async (req: Request, res: Response) => {
 
 export const UpdateProduct = async (req: Request, res: Response) => {
     var { id } = req.params;
-    var{ name, description}= req.body;
-
+    const{ name, description, precio,stock,id_categoria}= req.body;
     try {
            // Buscar el producto actual en la base de datos
            var existingProduct = await Product.findOne({ where: { id } });
@@ -67,7 +69,10 @@ export const UpdateProduct = async (req: Request, res: Response) => {
            // Actualizamos el producto en la base de datos
            const [updated] = await Product.update({
                name: name,
-               description: description
+               description: description,
+               precio:precio,
+               stock:stock,
+               id_categoria:id_categoria
            }, { where: { id } });
    
            if (updated) {

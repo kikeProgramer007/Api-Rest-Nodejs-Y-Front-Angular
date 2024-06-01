@@ -10,6 +10,7 @@ import { ProductComponent } from './components/product/product.component';
 import { AuthGuard } from './utils/auth.guard';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
+import { ListarComponent } from './components/empleado/listar/listar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'signIn', component: SignInComponent },
   { path: 'categoria', component: CategoriaComponent },
   { path: 'product', component: ProductComponent },
+  { path: 'cliente', component: ClienteComponent },
+  { path: 'empleado', component: ListarComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }

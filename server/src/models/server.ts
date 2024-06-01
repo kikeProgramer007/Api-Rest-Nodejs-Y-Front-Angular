@@ -10,6 +10,8 @@ import { User } from './user';
 import { Categoria } from './categoria';
 import { Cliente } from './cliente';
 import { Empleado } from './empleado';
+import { Notaventa } from './notaventa';
+import { Detalleventa } from './detalleventa';
 
 class Server {
     private app: Application;
@@ -53,6 +55,8 @@ class Server {
             await Cliente.sync();
             await Categoria.sync()
             await Product.sync()
+            await Notaventa.sync()
+            await Detalleventa.sync()
             await User.sync();
         } catch (error) {
             console.error('Unable to connect to the database:', error);

@@ -2,8 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { ProductService } from 'src/app/services/product.service';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorService } from 'src/app/services/error.service';
+import { Categoria } from 'src/app/interfaces/categoria';
 
 @Component({
   selector: 'app-product',
@@ -13,26 +15,28 @@ import { ErrorService } from 'src/app/services/error.service';
 export class ProductComponent implements OnInit {
 
   listProduct: Product[] = []
+  listCategoria: Categoria[] = []
   accion = 'Agregar';
   id: number | undefined;
 
   name: string = '';
   description: string = '';
   loading: boolean = false;
-
-
+  id_categoria: number = 0;
+  precio: number | undefined ;
+  stock: number | undefined ;
 
   //Contructor
   constructor(
+    private _categoriaService: CategoriaService,
     private _productService: ProductService,
     private toastr: ToastrService,
     private _errorService: ErrorService
-  ) { 
- 
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this.getCategorias();
   }
 
   getProducts() {
@@ -41,9 +45,15 @@ export class ProductComponent implements OnInit {
     })
   }
 
+  getCategorias(){
+    this._categoriaService.getLista().subscribe(data => {
+      this.listCategoria = data;
+    })
+  }
+
   addProduct(){
     // Validamos que el usuario ingrese valores
-    if (this.name == '' || this.description == '') {
+    if (this.name == '' || this.description == ''|| this.precio == 0 || this.precio == undefined || this.stock == 0||this.stock == undefined ||  this.id_categoria == 0) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
@@ -52,7 +62,10 @@ export class ProductComponent implements OnInit {
     var product:  any = {
       id: (this.id== undefined)?0:this.id,
       name: this.name,
-      description: this.description
+      description: this.description,
+      precio: this.precio,
+      stock: this.stock,
+      id_categoria: this.id_categoria
     }
 
     this.loading = true;
@@ -94,7 +107,10 @@ export class ProductComponent implements OnInit {
     this.accion = 'Editar';
     this.id = product.id;
     this.name = product.name,
-    this.description = product.description
+    this.description = product.description,
+    this.precio= product.precio,
+    this.stock= product.stock,
+    this.id_categoria = Number(product.id_categoria)
    }
 
    DeleteProduct(id: number){
@@ -114,8 +130,11 @@ export class ProductComponent implements OnInit {
   }
 
    private resetForm() {
+    this.id = undefined;
     this.name = '';
     this.description = '';
-    this.id = undefined;
+    this.precio = undefined;
+    this.stock = undefined;
+    this.id_categoria = 0;
   }
 }

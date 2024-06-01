@@ -20,6 +20,8 @@ import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ProductComponent } from './components/product/product.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
+import { ListarComponent } from './components/empleado/listar/listar.component';
+import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ClienteComponent } from './components/cliente/cliente.component';
     SpinnerComponent,
     ProductComponent,
     CategoriaComponent,
-    ClienteComponent
+    ClienteComponent,
+    ListarComponent,
+    CrearEditarComponent
   ],
   imports: [
     BrowserModule,
