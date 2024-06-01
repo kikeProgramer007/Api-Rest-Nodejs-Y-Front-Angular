@@ -1,5 +1,5 @@
 export interface Empleado {
-    id: number,
+    id?: number,
     nombre: string,
     telefono: number,
     direccion:string,

@@ -11,6 +11,7 @@ import { AuthGuard } from './utils/auth.guard';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { ListarComponent } from './components/empleado/listar/listar.component';
+import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'product', component: ProductComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'empleado', component: ListarComponent },
-  { path: 'cliente', component: ClienteComponent },
+  { path: 'empleado/crear', component: CrearEditarComponent },
+  { path: 'empleado/editar/:id', component: CrearEditarComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

@@ -34,7 +34,7 @@ export class ListarComponent implements OnInit {
     this.loading = true;
     this._empleadoService.delete(id).subscribe(() => {
       this.GetList();
-      this.toastr.warning(`El Registro fue elimado con exito`, 'Empleado Eliminado');
+      this.toastr.error(`El Registro fue elimado con exito`, 'Empleado Eliminado');
     })
   }
 

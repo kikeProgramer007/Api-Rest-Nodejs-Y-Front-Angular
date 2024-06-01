@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 // Modulos
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 
 // Componentes
@@ -39,6 +39,7 @@ import { CrearEditarComponent } from './components/empleado/crear-editar/crear-e
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule, // Añadir ReactiveFormsModule a imports
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

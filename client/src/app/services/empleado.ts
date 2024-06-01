@@ -20,6 +20,10 @@ export class EmpleadoService {
     return this.http.get<Empleado[]>(`${this.myAppUrl}${this.myApiUrl}`)
   }
 
+  buscar(id: number): Observable<Empleado> {
+    return this.http.get<Empleado>(`${this.myAppUrl}${this.myApiUrl}` +'/'+ id)
+  }
+
   save(empleado: Empleado): Observable<string> {
     return this.http.post<string>(`${this.myAppUrl}${this.myApiUrl}`, empleado)
   }
