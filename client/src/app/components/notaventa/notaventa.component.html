@@ -14,7 +14,7 @@
                                 <label class="form-label" >Código Producto</label> 
                             </div>
                             <div class="input-group mb-1 input-group-sm">
-                                <input  class="form-control " id="codigo" name="codigo" type="text" placeholder="Escribe el código y luego enter." data-bs-toggle="tooltip" data-bs-placement="bottom" title="Codigo" onkeyup="buscarProducto(event,this,this.value)" autofocus>
+                                <input  class="form-control" [(ngModel)]="id" id="codigo" name="codigo" type="text" placeholder="Escribe el código y luego enter." data-bs-toggle="tooltip" data-bs-placement="bottom" title="Codigo" onkeyup="buscarProducto(event,this,this.value)" autofocus>
                                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#lista"><i class="fa-solid fa-magnifying-glass"></i></button>                             
                             </div>
                             <div class="row">
@@ -24,13 +24,13 @@
                         <div class="col-12 col-sm-4">
                             <label>Nombre del producto</label> 
                             <div class="container-fluid px-0 py-2">
-                            <input class="form-control form-control-sm me-md-8" id="nombre" name="nombre" type="text" disabled />
+                            <input class="form-control form-control-sm me-md-8" [(ngModel)]="nombreProducto" id="nombreProducto" name="nombre" type="text" disabled/>
                             </div> 
                         </div>
                         <div class="col-12 col-sm-4">
                             <label>Cantidad</label>
                             <div class="container-fluid px-0 py-2">
-                            <input class="form-control form-control-sm" id="cantidad" name="cantidad" type="number" onkeyup="Calcula_cantidad_subtotal(event,this,codigo.value,this.value)" onclick="Calcula_cantidad_subtotal2(codigo.value,cantidad.value)"  disabled/>
+                            <input class="form-control form-control-sm" [(ngModel)]="cantidad" id="cantidad" name="cantidad" type="number" (click)="CalculaCantidadSubtotal()"   [disabled]="isDisabled"/>
                             </div> 
                         </div>
                     </div>   
@@ -41,19 +41,19 @@
                         <div class="col-12 col-sm-4">
                             <label>Precio</label> 
                             <div class="container-fluid px-0 py-2">
-                            <input class="form-control form-control-sm" id="precio_compra" name="precio_compra" type="text" disabled/>
+                            <input class="form-control form-control-sm" [(ngModel)]="precio" id="precio_compra" name="precio_compra" type="text" disabled/>
                             </div> 
                         </div>
                         <div class="col-12 col-sm-4">
                             <label>Subtotal</label>
                             <div class="container-fluid px-0 py-2">
-                            <input class="form-control form-control-sm" id="subtotal" name="subtotal" type="text" disabled step="0.01"/>
+                            <input class="form-control form-control-sm" [(ngModel)]="subtotal" id="subtotal" name="subtotal" type="text" step="0.01" disabled/>
                             </div> 
                         </div>
                         <div class="col-12 col-sm-4">
                             <label><br></label> 
                             <div class="container-fluid px-0 py-2">
-                            <button class="btn btn-primary btn-sm" id="agregar_producto" name="agregar_producto" type="button" onclick="agregarProducto(id_producto.value,codigo.value,cantidad.value)">Agregar producto</button>
+                            <button class="btn btn-primary btn-sm" id="agregar_producto" name="agregar_producto" type="button" (click)= "agregarItem()">Agregar producto</button>
                             </div> 
                         </div>
                     </div>   
@@ -81,39 +81,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Milanesa de Pollo</td>
-                                <td>Milanesa de Pollo</td>
-                                <td>12.00</td>
-                                <td>2</td>
-                                <td>24.00</td>
+                      
+                            <tr *ngFor="let item of listDetalleTemp">
+                                <td>{{ item.item }}</td>
+                                <td>{{ item.nombre }} </td>
+                                <td>{{ item.descripcion }} </td>
+                                <td>{{ item.precio }} </td>
+                                <td>{{ item.cantidad }} </td>
+                                <td>{{ item.subtotal }} </td>
                                 <td>
-                                    <a onclick="eliminaProducto(1)" href="javascript:void(0);" ><i class="fas fa-fw fa-trash"></i></a>
+                                    <a (click)="eliminaProducto(item)" href="javascript:void(0);" ><i class="fas fa-fw fa-trash"></i></a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Pepsi</td>
-                                <td>2L</td>
-                                <td>10.00</td>
-                                <td>7</td>
-                                <td>70.00</td>
-                                <td>
-                                    <a onclick="eliminaProducto(3)" href="javascript:void(0);" ><i class="fas fa-fw fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>CocaCola</td>
-                                <td>2L</td>
-                                <td>15.00</td>
-                                <td>2</td>
-                                <td>30.00</td>
-                                <td>
-                                    <a onclick="eliminaProducto(3)" href="javascript:void(0);" ><i class="fas fa-fw fa-trash"></i></a>
-                                </td>
-                            </tr>
+          
                         </tbody>
                     </table>
                 </div>
@@ -121,7 +101,7 @@
                     <div class="row">
                     <div class="d-grid gap-3 d-md-flex justify-content-md-end">
                             <label style="font-weight: bold; font-size: 30px; text-align: center;">Total Bs.</label>
-                            <input type="text" id="total" name="total" size="6" readonly="true" value="124.00" style="font-weight: bold; font-size: 30px; text-align: center;"/>
+                            <input type="text" id="total"  [(ngModel)]="total" name="total" size="6" readonly="true" value="124.00" style="font-weight: bold; font-size: 30px; text-align: center;"/>
                             <button class="btn btn-success" type="button" id="completa_compra">Completar venta</button>
                         </div>
                     </div>
@@ -144,7 +124,6 @@
               <table id="datatablesSimple" class="table-sm table table-bordered table-hover ">
                   <thead>
                       <tr>
-                          <th>Código</th>
                           <th>Nombre</th>
                           <th>Descripción</th>      
                           <th>Precio</th>               
@@ -153,30 +132,13 @@
                       </tr>
                   </thead>
                     <tbody>
-                        <tr>
-                            <td class="align-middle">1</td>                              
-                            <td class="align-middle">CocaCola</td>
-                            <td class="align-middle">2L</td>
-                            <td class="align-middle">12.00</td>
-                            <td class="align-middle text-center">36</td>
-                            <td><a class="badge bg-success" onclick="buscarproducto2(1)" rel="tooltip" data-placement="top" title="Seleccionar"> <i class="fas fa-plus"></i></a></td> 
-                        </tr>
-                        <tr>
-                            <td class="align-middle">2</td>                              
-                            <td class="align-middle">Pepsi</td>
-                            <td class="align-middle">2L</td>
-                            <td class="align-middle">10.00</td>
-                            <td class="align-middle text-center">20</td>
-                            <td><a class="badge bg-success" onclick="buscarproducto2(2)" rel="tooltip" data-placement="top" title="Seleccionar"> <i class="fas fa-plus"></i></a></td> 
-                        </tr>
-                        <tr>
-                            <td class="align-middle">3</td>                              
-                            <td class="align-middle">Milanesa de Pollo</td>
-                            <td class="align-middle">Milanesa de Pollo	</td>
-                            <td class="align-middle">12.00</td>
-                            <td class="align-middle text-center">30</td>
-                            <td><a class="badge bg-success" onclick="buscarproducto2(3)" rel="tooltip" data-placement="top" title="Seleccionar"> <i class="fas fa-plus"></i></a></td> 
-                        </tr> 
+                        <tr *ngFor="let item of listProduct">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.description }} </td>
+                            <td>{{ item.precio }} </td>
+                            <td>{{ item.stock }} </td>
+                            <td><a class="badge bg-success" (click)="SeleccionarProducto(item)" rel="tooltip" data-placement="top" title="Seleccionar"> <i class="fas fa-plus"></i></a></td> 
+                          </tr>
                     </tbody>
               </table>
           </div>

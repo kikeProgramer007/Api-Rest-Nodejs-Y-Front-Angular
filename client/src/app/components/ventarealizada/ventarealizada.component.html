@@ -1,0 +1,51 @@
+
+<app-navbar></app-navbar>
+
+<div *ngIf="!loading" class="container mt-4 text-center">
+    <div class="row">
+  
+      <div class="col-lg-8 offset-lg-2">
+            <div class="text-center">
+                <h2>Ventas Realizadas</h2>
+            </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="card">
+        <div class="card-body">
+
+  
+          <table class="table table-sm table-bordered  table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Fecha Venta</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Total</th>
+                <th scope="col">Usuario</th>
+                <th scope="col"width="1%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let item of Lista">
+              <td>{{ item.nombre }}</td>
+                <td>{{ item.telefono }} </td>
+                <td>{{ item.direccion }} </td>
+                <td>{{ item.correo }} </td>
+                <td>
+                  <button routerLink="/empleado/editar/{{ item.id }}" type="button" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+                </td>
+                <td>
+                  <button (click)="Delete(item.id!)" type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+  
+               
+  
+              </tr> -->
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

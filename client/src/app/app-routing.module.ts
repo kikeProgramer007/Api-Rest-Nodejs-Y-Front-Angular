@@ -13,6 +13,7 @@ import { ClienteComponent } from './components/cliente/cliente.component';
 import { ListarComponent } from './components/empleado/listar/listar.component';
 import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
 import { NotaventaComponent } from './components/notaventa/notaventa.component';
+import { VentarealizadaComponent } from './components/ventarealizada/ventarealizada.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'empleado/crear', component: CrearEditarComponent },
   { path: 'empleado/editar/:id', component: CrearEditarComponent },
   { path: 'venta', component: NotaventaComponent },
+  { path: 'ventarealizada', component: VentarealizadaComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

@@ -53,3 +53,7 @@ Crear Models
 
 > npx sequelize-cli model:generate --name Categoria --attributes description:string
 > npx sequelize-cli model:generate --name Producto --attributes description:string,idCategoria:integer
+
+
+--instalar jquery
+npm install jquery
