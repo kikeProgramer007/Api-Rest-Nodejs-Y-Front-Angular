@@ -57,3 +57,6 @@ Crear Models
 
 --instalar jquery
 npm install jquery
+
+--instalar sweetalert2
+npm install sweetalert2

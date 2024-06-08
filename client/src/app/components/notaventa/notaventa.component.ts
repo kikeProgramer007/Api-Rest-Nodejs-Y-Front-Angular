@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
 import { Detalleventatemporal } from 'src/app/interfaces/detalleventatemporal';
+import { SweetAlertService } from 'src/app/services/sweet-alert.service';
+import Swal from 'sweetalert2';
 declare var $: any; // Declara la variable global jQuery
 
 @Component({
@@ -24,7 +26,8 @@ export class NotaventaComponent implements OnInit {
   total: number = 0;
 
   constructor(
-    private _productService: ProductService
+    private _productService: ProductService,
+    private sweetAlertService: SweetAlertService
   ) { }
 
   ngOnInit(): void {
@@ -117,6 +120,23 @@ export class NotaventaComponent implements OnInit {
     this.cantidad = 0;
     this.precio = 0;
     this.subtotal = 0;
+  }
+
+
+// MOSTRAR CONFIRMACION
+  mostrarConfirmacion() {
+    this.sweetAlertService.mostrarConfirmacion('¿Estás seguro?', 'Esta acción no se puede deshacer.')
+      .then((result) => {
+        if (result.isConfirmed) {
+          // Aquí va la lógica si se confirma la acción
+          this.sweetAlertService.mostrarMensaje('Confirmado', 'La acción ha sido confirmada.', 'success');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          this.sweetAlertService.mostrarMensaje('Cancelado', 'La acción ha sido cancelada.', 'error');
+        }
+      });
+  }
+  mostrarAlerta() {
+    this.sweetAlertService.mostrarMensaje('¡Éxito!', 'Operación completada con éxito.', 'success');
   }
 
 }
