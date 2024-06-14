@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
 import { Detalleventatemporal } from 'src/app/interfaces/detalleventatemporal';
@@ -33,6 +33,7 @@ export class NotaventaComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
   }
+
 
   toggleInput() {
     this.isDisabled = !this.isDisabled;
