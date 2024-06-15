@@ -16,6 +16,9 @@ export const Notaventa = sequelize.define('notaventa', {
     monto: {
         type: DataTypes.FLOAT
     },
+    tipopago: {
+        type: DataTypes.STRING
+    },
     estado: {
         type: DataTypes.BOOLEAN,
         // allowNull: false,

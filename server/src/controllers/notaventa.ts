@@ -42,12 +42,13 @@ export const GetNotaventa = async (req: Request, res: Response) => {
 } 
 
 export const NewNotaventa = async (req: Request, res: Response) => {
-    const{ fecha, monto, estado, id_cliente, id_usuario}= req.body;
+    const{ fecha, monto, tipopago, estado, id_cliente, id_usuario}= req.body;
     try {
         // Guardarmos Notaventao en la base de datos
         await Notaventa.create({
             fecha: fecha,
             monto: monto,
+            tipopago: tipopago,
             estado: estado,
             id_cliente: id_cliente,
             id_usuario: id_usuario
@@ -66,7 +67,7 @@ export const NewNotaventa = async (req: Request, res: Response) => {
 
 export const UpdateNotaventa = async (req: Request, res: Response) => {
     var { id } = req.params;
-    const{ fecha, monto, estado, id_cliente, id_usuario}= req.body;
+    const{ fecha, monto, tipopago, estado, id_cliente, id_usuario}= req.body;
     try {
            // Buscar el Notaventao actual en la base de datos
            var existingNotaventa = await Notaventa.findOne({ where: { id } });
@@ -81,6 +82,7 @@ export const UpdateNotaventa = async (req: Request, res: Response) => {
            const [updated] = await Notaventa.update({
                 fecha: fecha,
                 monto: monto,
+                tipopago: tipopago,
                 estado: estado,
                 id_cliente: id_cliente,
                 id_usuario: id_usuario   
