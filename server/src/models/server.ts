@@ -5,6 +5,8 @@ import routesProduct from '../routes/product';
 import routesCliente from '../routes/cliente';
 import routesEmpleado from '../routes/empleado';
 import routesUser from '../routes/user';
+import routesNotaventa from '../routes/notaventa';
+import routesDetalleventa from '../routes/detalleventa';
 import { Product } from './product';
 import { User } from './user';
 import { Categoria } from './categoria';
@@ -39,6 +41,8 @@ class Server {
         this.app.use('/api/categorias', routeCategoria);
         this.app.use('/api/clientes', routesCliente);
         this.app.use('/api/empleados', routesEmpleado);
+        this.app.use('/api/notaventas', routesNotaventa);
+        this.app.use('/api/detalleventas', routesDetalleventa);
     }
 
     midlewares() {
