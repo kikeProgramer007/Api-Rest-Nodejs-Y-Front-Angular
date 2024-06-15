@@ -39,7 +39,7 @@ export const newUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
 
     const { username, password } = req.body;
-
+    
    // Validamos si el usuario existe en la base de datos
    const user: any = await User.findOne({ where: { username: username } });
 
@@ -56,9 +56,10 @@ export const loginUser = async (req: Request, res: Response) => {
         msg: `Password Incorrecta`
     })
    }
-
+   let id = user.id;
    // Generamos token
    const token = jwt.sign({
+    id: id,
     username: username
    }, process.env.SECRET_KEY || 'pepito123');
    

@@ -2,6 +2,8 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../db/connection';
 import { Cliente } from './cliente';
 import { User } from './user';
+import { Detalleventa } from './detalleventa';
+import { Product } from './product';
 
 export const Notaventa = sequelize.define('notaventa', {
     

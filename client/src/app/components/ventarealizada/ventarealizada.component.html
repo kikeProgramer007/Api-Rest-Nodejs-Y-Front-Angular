@@ -1,7 +1,7 @@
 
 <app-navbar></app-navbar>
-
-<div *ngIf="!loading" class="container mt-4 text-center">
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="!loading"class="container mt-4 text-center">
     <div class="row">
   
       <div class="col-lg-8 offset-lg-2">
@@ -19,28 +19,29 @@
             <thead>
               <tr>
                 <th scope="col">Fecha Venta</th>
-                <th scope="col">Cliente</th>
                 <th scope="col">Total</th>
+                <th scope="col">Tipo Pago</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Usuario</th>
+                <th scope="col"width="1%"></th>
                 <th scope="col"width="1%"></th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let item of Lista">
-              <td>{{ item.nombre }}</td>
-                <td>{{ item.telefono }} </td>
-                <td>{{ item.direccion }} </td>
-                <td>{{ item.correo }} </td>
+               <tr *ngFor="let item of Lista">
+              <td>{{ item.fecha | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td>{{ item.monto }} </td>
+                <td>{{ item.tipopago }} </td>
+                <td>{{ item.cliente?.nombre }} </td>
+                <td>{{ item.user?.username }} </td>
+                <!-- <td>
+                  <button  type="button" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+                </td> -->
                 <td>
-                  <button routerLink="/empleado/editar/{{ item.id }}" type="button" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
-                </td>
-                <td>
-                  <button (click)="Delete(item.id!)" type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></button>
+                  <button (click)="VerPDF(item.id!)" type="button" class="btn btn-danger btn-sm"><i class="fa-regular fa-file-pdf"></i></button>
                 </td>
   
-               
-  
-              </tr> -->
+              </tr>
             
             </tbody>
           </table>

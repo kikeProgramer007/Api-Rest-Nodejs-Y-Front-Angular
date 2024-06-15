@@ -8,7 +8,8 @@ export const getNotaventas = async (req: Request, res: Response) => {
         include: [
             { model: Cliente },
             { model: User }
-        ]
+        ],
+        order: [['fecha', 'DESC'],['id', 'DESC']]
     });
     res.json(listNotaventas)
 }
@@ -45,18 +46,25 @@ export const NewNotaventa = async (req: Request, res: Response) => {
     const{ fecha, monto, tipopago, estado, id_cliente, id_usuario}= req.body;
     try {
         // Guardarmos Notaventao en la base de datos
-        await Notaventa.create({
+        const createdNotaventa  =  await Notaventa.create({
             fecha: fecha,
             monto: monto,
-            tipopago: tipopago,
+            tipopago:tipopago,
             estado: estado,
             id_cliente: id_cliente,
             id_usuario: id_usuario
         })
-    
-        res.json({
-            msg: `Notaventao  ${fecha} creado exitosamente!`
-        })
+        if (createdNotaventa) {
+            res.json({
+                msg: `Nota de venta para la fecha ${fecha} creada exitosamente!`,
+                Notaventa: createdNotaventa
+            });
+        }else {
+            res.status(500).json({
+                msg: 'Error al crear la nota de venta'
+            });
+        }
+      
     } catch (error) {
         res.status(400).json({
             msg: 'Upps ocurrio un error',
@@ -85,8 +93,7 @@ export const UpdateNotaventa = async (req: Request, res: Response) => {
                 tipopago: tipopago,
                 estado: estado,
                 id_cliente: id_cliente,
-                id_usuario: id_usuario   
-
+                id_usuario:id_usuario
            }, { where: { id } });
    
            if (updated) {
@@ -134,3 +141,5 @@ export const DeleteNotaventa = async (req: Request, res: Response) => {
         })
     }
 }
+
+

@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { Detalleventa } from '../models/detalleventa';
 import { Notaventa } from '../models/notaventa'
 import { Product } from '../models/product';
+import { appService } from '../servicios/app.service';
+import { where } from 'sequelize';
 ;
 
 
@@ -35,14 +37,15 @@ export const GetDetalleventa = async (req: Request, res: Response) => {
 }
 
 export const NewDetalleventa = async (req: Request, res: Response) => {
-    const{ id_venta, id_producto, cantidad, precio_v}= req.body;
+    const{ id_venta, id_producto, cantidad, precio_v, subtotal}= req.body;
     try {
         // Guardarmos Detalleventao en la base de datos
         await Detalleventa.create({
             id_venta: id_venta,
             id_producto: id_producto,
             cantidad: cantidad,
-            precio_v: precio_v
+            precio_v: precio_v,
+            subtotal: subtotal
         })
     
         res.json({
@@ -58,7 +61,7 @@ export const NewDetalleventa = async (req: Request, res: Response) => {
 
 export const UpdateDetalleventa = async (req: Request, res: Response) => {
     var { id } = req.params;
-    const{ id_venta, id_producto, cantidad, precio_v}= req.body;
+    const{ id_venta, id_producto, cantidad, precio_v,subtotal}= req.body;
     try {
            // Buscar el Detalleventao actual en la base de datos
            var existingDetalleventa = await Detalleventa.findOne({ where: { id } });
@@ -74,7 +77,8 @@ export const UpdateDetalleventa = async (req: Request, res: Response) => {
                 id_venta: id_venta,
                 id_producto: id_producto,
                 cantidad: cantidad,
-                precio_v: precio_v  
+                precio_v: precio_v,
+                subtotal: subtotal,
 
            }, { where: { id } });
    
@@ -119,6 +123,63 @@ export const DeleteDetalleventa = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json({
             msg: 'Upps, ocurrió un error',
+            error
+        })
+    }
+}
+
+export var PDFDetalleVenta = async (req: Request, res: Response):Promise<void> => {
+    var { id } = req.params;
+    try {
+       // Obtener los detalles de la venta desde la base de datos
+       const detalles = await Detalleventa.findAll({where: { id_venta: id }});
+
+    if (detalles.length > 0) {
+        // Crear una lista para almacenar los detalles combinados
+        const detallesCombinados: any[] = [];
+
+        // Recorrer cada elemento de detalles y agregarlo a detallesCombinados
+        for (const detalle of detalles) {
+            const producto = await Product.findOne({ where: { id: detalle.getDataValue('id_producto') } });
+
+            if (producto) {
+                const item: any = {
+                    // id: detalle.getDataValue('id'),
+                    // id_venta: detalle.getDataValue('id_venta'),
+                    // id_producto: detalle.getDataValue('id_producto'),
+                    nombre: producto.getDataValue('name'), // Obtener el nombre del producto
+                    descripcion: producto.getDataValue('description'), // Obtener el nombre del producto
+                    precio_v: detalle.getDataValue('precio_v'), // Acceder al valor de precio_v
+                    cantidad: detalle.getDataValue('cantidad'),
+                    subtotal: detalle.getDataValue('subtotal'), // Acceder al valor de subtotal
+                };
+                detallesCombinados.push(item);
+            }
+        }
+
+        // res.json(detallesCombinados)
+
+         //Simular la generación del PDF (reemplaza con tu lógica real)
+         //const buffer = Buffer.from(JSON.stringify(detallesCombinados)); // Ejemplo: convierte a JSO
+     
+         if (detallesCombinados) {
+            var buffer = await appService.generatePDF(detallesCombinados);
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': 'attachment; filename=example.pdf',
+                'Content-Length': buffer.length,
+              })
+              res.send(buffer);
+        }
+    } else {
+        res.status(404).json({
+            msg: 'Detalleventa no encontrado',
+        });
+    }
+
+    } catch (error) {
+        res.status(400).json({
+            msg: 'Upps ocurrio un error',
             error
         })
     }

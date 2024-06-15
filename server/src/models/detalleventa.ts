@@ -22,6 +22,9 @@ export const Detalleventa = sequelize.define('detalleventa', {
     },
     precio_v: {
         type: DataTypes.FLOAT
+    },
+    subtotal: {
+        type: DataTypes.FLOAT
     }
 }, 
 {

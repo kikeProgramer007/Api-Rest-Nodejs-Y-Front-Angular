@@ -120,3 +120,39 @@ export const DeleteProduct = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const UpdateStock = async (req: Request, res: Response) => {
+    var { id } = req.params;
+    const{ stock }= req.body;
+    try {
+           // Buscar el producto actual en la base de datos
+           var existingProduct = await Product.findOne({ where: { id } });
+        
+           if (!existingProduct) {
+               return res.status(404).json({
+                   msg: 'Producto no encontrado',
+               });
+           }
+   
+           // Actualizamos el producto en la base de datos
+           const [updated] = await Product.update({
+               stock:stock
+           }, { where: { id } });
+   
+           if (updated) {
+               res.status(200).json({
+                   msg: `stockt actualizado exitosamente!`,
+               });
+           } else {
+               res.status(200).json({
+                msg: 'No hay cambios para actualizar',
+               });
+           }
+
+    } catch (error) {
+        res.status(400).json({
+            msg: 'Upps ocurrio un error',
+            error
+        })
+    }
+}

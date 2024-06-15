@@ -68,3 +68,8 @@ npm install sweetalert2
 --- calcular subtotal al colocar una cantidad de 100 por ejemplo
 --- no debe permitir que agregue una cantidad mayor al stock
 --- reporte de 
+
+
+
+npm install pdfkit
+npm install pdfkit-table
