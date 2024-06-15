@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/connection';
 import { Cliente } from './cliente';
-import { Empleado } from './empleado';
+import { User } from './user';
 
 export const Notaventa = sequelize.define('notaventa', {
     
@@ -17,7 +17,7 @@ export const Notaventa = sequelize.define('notaventa', {
         type: DataTypes.FLOAT
     },
     estado: {
-        type: DataTypes.TINYINT,
+        type: DataTypes.BOOLEAN,
         // allowNull: false,
         // references: {
         //   model: Categoria,
@@ -27,7 +27,7 @@ export const Notaventa = sequelize.define('notaventa', {
     id_cliente: {
         type: DataTypes.INTEGER
     },
-    id_empleado: {
+    id_usuario: {
         type: DataTypes.INTEGER
     },
 }, 
@@ -40,5 +40,5 @@ export const Notaventa = sequelize.define('notaventa', {
 Cliente.hasMany(Notaventa,{ foreignKey: 'id_cliente'});
 Notaventa.belongsTo(Cliente,{foreignKey: 'id_cliente'});
 
-Empleado.hasMany(Notaventa,{ foreignKey: 'id_empleado'});
-Notaventa.belongsTo(Empleado,{foreignKey: 'id_empleado'});
+User.hasMany(Notaventa,{ foreignKey: 'id_usuario'});
+Notaventa.belongsTo(User,{foreignKey: 'id_usuario'});

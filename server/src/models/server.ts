@@ -59,9 +59,9 @@ class Server {
             await Cliente.sync();
             await Categoria.sync()
             await Product.sync()
+            await User.sync();
             await Notaventa.sync()
             await Detalleventa.sync()
-            await User.sync();
         } catch (error) {
             console.error('Unable to connect to the database:', error);
         }

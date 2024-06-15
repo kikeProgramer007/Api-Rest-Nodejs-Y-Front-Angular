@@ -1,11 +1,15 @@
 import { Request, Response } from 'express';
 import { Notaventa } from '../models/notaventa';
 import { Cliente } from '../models/cliente';
-import { Empleado } from '../models/empleado';
+import { User } from '../models/user';
 
 export const getNotaventas = async (req: Request, res: Response) => {
-    const listNotaventas = await Notaventa.findAll();//{ include: Categoria }
-
+    const listNotaventas = await Notaventa.findAll({
+        include: [
+            { model: Cliente },
+            { model: User }
+        ]
+    });
     res.json(listNotaventas)
 }
 
@@ -14,7 +18,12 @@ export const GetNotaventa = async (req: Request, res: Response) => {
 
     try {
         // Actualizamos Notaventao en la base de datos
-        const SetNotaventa = await Notaventa.findOne({ where: { id } });
+        const SetNotaventa = await Notaventa.findOne({
+            include: [
+                { model: Cliente },
+                { model: User }
+            ],
+         where: { id } });
         
         if (SetNotaventa) {
             res.status(200).json(SetNotaventa);
@@ -30,10 +39,10 @@ export const GetNotaventa = async (req: Request, res: Response) => {
             error
         })
     }
-}
+} 
 
 export const NewNotaventa = async (req: Request, res: Response) => {
-    const{ fecha, monto, estado, id_cliente, id_empleado}= req.body;
+    const{ fecha, monto, estado, id_cliente, id_usuario}= req.body;
     try {
         // Guardarmos Notaventao en la base de datos
         await Notaventa.create({
@@ -41,7 +50,7 @@ export const NewNotaventa = async (req: Request, res: Response) => {
             monto: monto,
             estado: estado,
             id_cliente: id_cliente,
-            id_empleado: id_empleado
+            id_usuario: id_usuario
         })
     
         res.json({
@@ -57,7 +66,7 @@ export const NewNotaventa = async (req: Request, res: Response) => {
 
 export const UpdateNotaventa = async (req: Request, res: Response) => {
     var { id } = req.params;
-    const{ fecha, monto, estado, id_cliente, id_empleado}= req.body;
+    const{ fecha, monto, estado, id_cliente, id_usuario}= req.body;
     try {
            // Buscar el Notaventao actual en la base de datos
            var existingNotaventa = await Notaventa.findOne({ where: { id } });
@@ -74,7 +83,7 @@ export const UpdateNotaventa = async (req: Request, res: Response) => {
                 monto: monto,
                 estado: estado,
                 id_cliente: id_cliente,
-                id_empleado: id_empleado   
+                id_usuario: id_usuario   
 
            }, { where: { id } });
    

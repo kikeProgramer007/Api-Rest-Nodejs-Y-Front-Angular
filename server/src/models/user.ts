@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/connection';
+import { Empleado } from './empleado';
 
 export const User = sequelize.define('user', {
     id: {
@@ -15,5 +16,12 @@ export const User = sequelize.define('user', {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    id_empleado: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
 }, )
+
+Empleado.hasOne(User,{ foreignKey: 'id_empleado'});
+User.belongsTo(Empleado,{foreignKey: 'id_empleado'});
