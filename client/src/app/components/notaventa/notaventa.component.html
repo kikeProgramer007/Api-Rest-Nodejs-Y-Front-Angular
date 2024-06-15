@@ -2,7 +2,9 @@
 <main>
     <div class="container mt-4"> 
         <form method="POST" id="form_compra" name="form_compra" autocomplete="off">
-        
+        <div class="row pt-0">
+            <h2 class="text-center">Nota de venta</h2>
+        </div>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="form-group">
@@ -69,7 +71,7 @@
                         </div>
                         <div class="col-12 col-sm-2">
                             <label class="form-label">Cantidad</label>
-                            <input class="form-control form-control-sm" [(ngModel)]="cantidad" id="cantidad" name="cantidad" type="number" (click)="CalculaCantidadSubtotal()"   [disabled]="isDisabled"/>
+                            <input class="form-control form-control-sm" min="0" (input)="onInputChange($event)" [(ngModel)]="cantidad" id="cantidad" name="cantidad" type="number" (click)="CalculaCantidadSubtotal()"   [disabled]="isDisabled"/>
                         </div>
                         <div class="col-12 col-sm-2">
                             <label class="form-label">Subtotal</label>
@@ -178,8 +180,37 @@
     </div>
   </div>
 
-
-
-
-
-
+     <!-- Modal lista product-->
+     <div class="modal fade" id="listacliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg  modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title w-100 text-center fw-bold"id="exampleModalLabel">LISTA DE CLIENTES</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="card-body"> 
+                  <table id="datatablesSimple" class="table-sm table table-bordered table-hover ">
+                      <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Cedula Identidad</th>
+                            <th width= "1%"></th>        
+                          </tr>
+                      </thead>
+                        <tbody>
+                            <tr *ngFor="let item of listCliente">
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.ci }}</td>
+                                <td><a class="badge bg-success" (click)="SeleccionarProducto(item)" rel="tooltip" data-placement="top" title="Seleccionar"> <i class="fas fa-plus"></i></a></td> 
+                              </tr>
+                        </tbody>
+                  </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>

@@ -1,10 +1,13 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
 import { Detalleventatemporal } from 'src/app/interfaces/detalleventatemporal';
 import { SweetAlertService } from 'src/app/services/sweet-alert.service';
-import Swal from 'sweetalert2';
 declare var $: any; // Declara la variable global jQuery
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { Cliente } from 'src/app/interfaces/cliente';
 
 @Component({
   selector: 'app-notaventa',
@@ -13,12 +16,14 @@ declare var $: any; // Declara la variable global jQuery
 })
 export class NotaventaComponent implements OnInit {
   listProduct: Product[] = [];
+  listCliente: Cliente[] = [];
   listDetalleTemp: Detalleventatemporal[] = [];
 
   id:number = 0;
   nombreProducto:string = '';
   descripcion:string = '';
   precio:number = 0;
+  stock:number=0;
   cantidad:number = 0;
   subtotal:number = 0;
   isDisabled: boolean = true;
@@ -27,11 +32,14 @@ export class NotaventaComponent implements OnInit {
 
   constructor(
     private _productService: ProductService,
+    private _clienteService: ClienteService,
+    private toastr: ToastrService,
     private sweetAlertService: SweetAlertService
   ) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this.getClientes();
   }
 
 
@@ -44,6 +52,11 @@ export class NotaventaComponent implements OnInit {
       this.listProduct = data;
     })
   }
+  getClientes() {
+    this._clienteService.getLista().subscribe(data => {
+      this.listCliente = data;
+    })
+  }
 
   SeleccionarProducto(item: any){
     this.id = item.id;
@@ -51,33 +64,55 @@ export class NotaventaComponent implements OnInit {
     this.descripcion = item.description;
     this.precio = item.precio;
     this.subtotal = item.precio*1;
+    this.stock = item.stock;
     this.cantidad = 1;
     this.isDisabled = false;
     this.closeModal() ;
   }
+  
+  SeleccionarCliente(item: any){
+    this.id = item.id;
+    this.nombreProducto = item.name;
+    this.descripcion = item.description;
+    this.precio = item.precio;
+    this.subtotal = item.precio*1;
+    this.stock = item.stock;
+    this.cantidad = 1;
+    this.isDisabled = false;
+    this.closeModal() ;
+  }
+
 
   CalculaCantidadSubtotal() {
     // Lógica para calcular el subtotal basado en el código y la cantidad
     this.subtotal = this.precio*this.cantidad;
     this.subtotal = Number(this.subtotal.toFixed(2));
   }
-
+  onInputChange(event: any): void {
+    this.subtotal = this.precio*this.cantidad;
+    this.subtotal = Number(this.subtotal.toFixed(2));
+  }
   agregarItem() {
     if(this.id!=0){
-      const nuevoItem: Detalleventatemporal = {
-        item: this.listDetalleTemp.length + 1, // o cualquier lógica para determinar el número de ítem
-        nombre: this.nombreProducto,
-        descripcion: this.descripcion,
-        precio: this.precio,
-        cantidad: this.cantidad,
-        subtotal: this.subtotal
-      };
+      if(this.stock>this.cantidad){
+        const nuevoItem: Detalleventatemporal = {
+          item: this.listDetalleTemp.length + 1, // o cualquier lógica para determinar el número de ítem
+          nombre: this.nombreProducto,
+          descripcion: this.descripcion,
+          precio: this.precio,
+          cantidad: this.cantidad,
+          subtotal: this.subtotal
+        };
+  
+        this.listDetalleTemp.push(nuevoItem);
+        this.total = this.subtotal + this.total;
+        this.total = Number(this.total.toFixed(2));
+        console.log('Item agregado:', nuevoItem);
+        this.resetForm();
+      }else{
+        this.toastr.error(`La Cantidad excedio el stock`, `El stock actual es ${this.stock} `);
+      }
 
-      this.listDetalleTemp.push(nuevoItem);
-      this.total = this.subtotal + this.total;
-      this.total = Number(this.total.toFixed(2));
-      console.log('Item agregado:', nuevoItem);
-      this.resetForm();
     }
   }
 
@@ -94,7 +129,6 @@ export class NotaventaComponent implements OnInit {
     } else {
       console.log('Item no encontrado:', item);
     }
-
   }
 
   actualizarContadorItems() {

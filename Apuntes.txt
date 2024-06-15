@@ -60,3 +60,11 @@ npm install jquery
 
 --instalar sweetalert2
 npm install sweetalert2
+
+
+
+
+--- quiere haiga un ticket pdf de la venta
+--- calcular subtotal al colocar una cantidad de 100 por ejemplo
+--- no debe permitir que agregue una cantidad mayor al stock
+--- reporte de 
