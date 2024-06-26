@@ -13,8 +13,8 @@ export class NotaventaService {
   private myApiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/notaventas'
+    this.myAppUrl = environment.endpoint;//http://localhost:3001/api/notaventas/
+    this.myApiUrl = 'api/notaventas' //
   }
 
   getLista(): Observable<Notaventa[]> {
@@ -31,5 +31,10 @@ export class NotaventaService {
 
   delete(id: number): Observable<any>{
     return this.http.delete(this.myAppUrl + this.myApiUrl +'/'+ id)
+  }
+  VerPdfRango(fechas: any): Observable<any>{
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}/VerPdfRango`, fechas, {
+      responseType: 'blob' as 'json' // Indicar que esperamos un blob (archivo binario)
+    });
   }
 }

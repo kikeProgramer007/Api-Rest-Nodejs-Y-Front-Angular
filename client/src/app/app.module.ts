@@ -24,6 +24,7 @@ import { ListarComponent } from './components/empleado/listar/listar.component';
 import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
 import { NotaventaComponent } from './components/notaventa/notaventa.component';
 import { VentarealizadaComponent } from './components/ventarealizada/ventarealizada.component';
+import { ReporteComponent } from './components/reporte/reporte.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { VentarealizadaComponent } from './components/ventarealizada/ventarealiz
     ListarComponent,
     CrearEditarComponent,
     NotaventaComponent,
-    VentarealizadaComponent
+    VentarealizadaComponent,
+    ReporteComponent
   ],
   imports: [
     BrowserModule,

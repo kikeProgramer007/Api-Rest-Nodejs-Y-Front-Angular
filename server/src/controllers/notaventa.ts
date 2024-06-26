@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { Notaventa } from '../models/notaventa';
 import { Cliente } from '../models/cliente';
 import { User } from '../models/user';
+import sequelize from '../db/connection';
+import { appService } from '../servicios/app.service';
 
 export const getNotaventas = async (req: Request, res: Response) => {
     const listNotaventas = await Notaventa.findAll({
@@ -143,3 +145,39 @@ export const DeleteNotaventa = async (req: Request, res: Response) => {
 }
 
 
+
+//listar Registros
+export const GetRptRangoVentas = async (req: Request, res: Response) => {
+    const{ usuario, fecha_inicio, fecha_fin}= req.body;
+    try{
+        
+        const resultados: any = await sequelize.query(`
+            SELECT DATE(nv.fecha) as fechaventa,TIME(nv.fecha) hora,u.username,c.nombre,nv.monto
+            FROM notaventa nv
+            JOIN clientes c ON (nv.id_cliente=c.id)
+            JOIN users u ON (nv.id_usuario=u.id)
+            WHERE DATE(nv.fecha) BETWEEN DATE('${fecha_inicio}') AND DATE('${fecha_fin}') 
+            ORDER BY nv.fecha ASC
+          `);
+
+       if (resultados[0].length > 0) {
+        var buffer = await appService.pdfRangoFechas(resultados[0],usuario);
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename=example.pdf',
+            'Content-Length': buffer.length,
+          })
+        res.status(200).send(buffer);
+        } else {
+            res.status(404).json({
+                msg: 'error',
+            });
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            msg: 'Upps ocurrio un error',
+            error
+        })
+    }
+}

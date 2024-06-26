@@ -3,8 +3,8 @@ import { Detalleventa } from '../models/detalleventa';
 import { Notaventa } from '../models/notaventa'
 import { Product } from '../models/product';
 import { appService } from '../servicios/app.service';
-import { where } from 'sequelize';
-;
+import { Cliente } from '../models/cliente';
+import { User } from '../models/user';
 
 
 export const getDetalleventas = async (req: Request, res: Response) => {
@@ -137,7 +137,10 @@ export var PDFDetalleVenta = async (req: Request, res: Response):Promise<void> =
     if (detalles.length > 0) {
         // Crear una lista para almacenar los detalles combinados
         const detallesCombinados: any[] = [];
-
+        const venta = await Notaventa.findOne({  include: [
+            { model: Cliente },
+            { model: User }
+        ], where: { id: id } });
         // Recorrer cada elemento de detalles y agregarlo a detallesCombinados
         for (const detalle of detalles) {
             const producto = await Product.findOne({ where: { id: detalle.getDataValue('id_producto') } });
@@ -145,7 +148,7 @@ export var PDFDetalleVenta = async (req: Request, res: Response):Promise<void> =
             if (producto) {
                 const item: any = {
                     // id: detalle.getDataValue('id'),
-                    // id_venta: detalle.getDataValue('id_venta'),
+                    id_venta: detalle.getDataValue('id_venta'),
                     // id_producto: detalle.getDataValue('id_producto'),
                     nombre: producto.getDataValue('name'), // Obtener el nombre del producto
                     descripcion: producto.getDataValue('description'), // Obtener el nombre del producto
@@ -163,7 +166,7 @@ export var PDFDetalleVenta = async (req: Request, res: Response):Promise<void> =
          //const buffer = Buffer.from(JSON.stringify(detallesCombinados)); // Ejemplo: convierte a JSO
      
          if (detallesCombinados) {
-            var buffer = await appService.generatePDF(detallesCombinados);
+            var buffer = await appService.generatePDF(detallesCombinados,venta);
             res.set({
                 'Content-Type': 'application/pdf',
                 'Content-Disposition': 'attachment; filename=example.pdf',

@@ -12,15 +12,12 @@ export class ProductService {
   private myApiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/products'
+    this.myAppUrl = environment.endpoint;//http://localhost:3001
+    this.myApiUrl = 'api/products'///api/products/
   }
 
   getProducts(): Observable<Product[]> {
-    /*  const token = localStorage.getItem('token')
-     const headers = new HttpHeaders().set('Authorization',`Bearer ${token}`) */
-    /*     return this.http.get<Product[]>(`${this.myAppUrl}${this.myApiUrl}`, { headers: headers } ) */
-    return this.http.get<Product[]>(`${this.myAppUrl}${this.myApiUrl}`)
+    return this.http.get<Product[]>(`${this.myAppUrl}${this.myApiUrl}`)///http://localhost:3001/api/products/
   }
 
   saveProduct(product: Product): Observable<string> {
@@ -28,7 +25,7 @@ export class ProductService {
   }
 
   updateProduct(id:number, product:any): Observable<any>{
-    return this.http.put(this.myAppUrl + this.myApiUrl +'/'+ id, product); 
+    return this.http.put(this.myAppUrl + this.myApiUrl +'/'+ id, product); //http://localhost:3001/api/products/7
   }
 
   deleteProduct(id: number): Observable<any>{

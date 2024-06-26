@@ -73,7 +73,7 @@ export class ProductComponent implements OnInit {
       this._productService.saveProduct(product).subscribe({
         next: (v) => {
           this.loading = false;
-          this.toastr.success(`El usuario ${this.name} fue registrado con exito`, 'Usuario registrado');
+          this.toastr.success(`El producto ${this.name} fue registrado con exito`, 'Producto registrado');
           this.resetForm();
           this.getProducts();
         },

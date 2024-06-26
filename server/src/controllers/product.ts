@@ -141,7 +141,7 @@ export const UpdateStock = async (req: Request, res: Response) => {
    
            if (updated) {
                res.status(200).json({
-                   msg: `stockt actualizado exitosamente!`,
+                   msg: `stock actualizado exitosamente!`,
                });
            } else {
                res.status(200).json({

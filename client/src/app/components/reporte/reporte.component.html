@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+<main>
+    <div class="container mt-4"> 
+        <form method="POST" id="form_compra" name="form_compra" autocomplete="off">
+        <div class="row pt-0">
+            <h2 class="text-center">Reportes</h2>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="form-group ">
+                    <div class="row">
+           
+                        <div class="col-12 col-sm-2">
+                            <label class="form-label">Fecha Desde</label>
+                            <input class="form-control form-control-sm"  [(ngModel)]="fechaDesde" value="{{ fechaDesde}}"  id="cantidad" name="cantidad" type="date" />
+                        </div>
+                        <div class="col-12 col-sm-2">
+                            <label class="form-label">Fecha Hasta</label>
+                            <input class="form-control form-control-sm" [(ngModel)]="fechaHasta" value="{{ fechaHasta}}" id="subtotal" name="subtotal" type="date"  />
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="d-flex justify-content-center px-0 mt-3">
+                                <button class="btn btn-primary btn-sm" id="agregar_producto" name="agregar_producto" type="button" (click)= "generarReporte()">Generar Reporte</button>
+                            </div> 
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>
+
+ 
+        </form>   
+    </div>
+

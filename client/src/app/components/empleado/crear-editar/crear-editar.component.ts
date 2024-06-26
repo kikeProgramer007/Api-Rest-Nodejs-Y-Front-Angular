@@ -66,7 +66,7 @@ export class CrearEditarComponent implements OnInit {
       // Es editar 
       empleado.id = this.id;
       this._empleadoService.update(this.id, empleado).subscribe(() => {
-        this.toastr.info(`El producto ${empleado.nombre} fue actualizado con exito`, 'Producto actualizado');
+        this.toastr.info(`El empleado ${empleado.nombre} fue actualizado con exito`, 'Empleado actualizado');
         this.loading = false;
         this.router.navigate(['/empleado']);
       })
@@ -74,7 +74,7 @@ export class CrearEditarComponent implements OnInit {
     } else {
       // Es agregar
       this._empleadoService.save(empleado).subscribe(() => {
-        this.toastr.success(`El producto ${empleado.nombre} fue registrado con exito`, 'Producto registrado');
+        this.toastr.success(`El empleado ${empleado.nombre} fue registrado con exito`, 'Empleado registrado');
         this.loading = false;
         this.router.navigate(['/empleado']);
       })

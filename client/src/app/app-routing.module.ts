@@ -14,6 +14,7 @@ import { ListarComponent } from './components/empleado/listar/listar.component';
 import { CrearEditarComponent } from './components/empleado/crear-editar/crear-editar.component';
 import { NotaventaComponent } from './components/notaventa/notaventa.component';
 import { VentarealizadaComponent } from './components/ventarealizada/ventarealizada.component';
+import { ReporteComponent } from './components/reporte/reporte.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'empleado/editar/:id', component: CrearEditarComponent },
   { path: 'venta', component: NotaventaComponent },
   { path: 'ventarealizada', component: VentarealizadaComponent },
+  { path: 'reportes', component: ReporteComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
